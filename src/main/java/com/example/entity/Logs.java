@@ -21,7 +21,7 @@ public class Logs {
 	private Integer id;
 	
 	@Column(name = "LIBRARY_ID")
-	private Integer ribraryId;
+	private Integer libraryId;
 	
 	@Column(name = "USER_ID")
 	private Integer userId;
@@ -43,12 +43,12 @@ public class Logs {
 		this.id = id;
 	}
 	
-	public Integer getRibraryId() {
-		return this.ribraryId;
+	public Integer getLibraryId() {
+		return this.libraryId;
 	}
 	
-	public void setRibraryId(Integer ribraryId) {
-		this.ribraryId = ribraryId;
+	public void setLibraryId(Integer ribraryId) {
+		this.libraryId = ribraryId;
 	}
 	
 	public Integer getUserId() {
