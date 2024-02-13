@@ -39,12 +39,12 @@ public class LibraryService {
     public void borrowBook(Integer id, String returnDueDate, LoginUser loginUser) {
     	Library library = findById(id);
     	
-    	library.setUserId(loginUser.getId());
+    	library.setUserId(loginUser.getUser().getId());
     	libraryRepository.save(library);
     	
     	Logs logs = new Logs();
     	logs.setLibraryId(library.getId());
-    	logs.setUserId(loginUser.getId());
+    	logs.setUserId(loginUser.getUser().getId());
     	logs.setRentDate(LocalDateTime.now());
     	logs.setReturnDueDate(LocalDateTime.parse(returnDueDate + "T00:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
     	logs.setReturnDate(null);
