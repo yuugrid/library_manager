@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Library;
-import com.example.entity.User;
 import com.example.service.LibraryService;
+import com.example.service.LoginUser;
 
 @Controller
 @RequestMapping("library")
@@ -42,8 +42,8 @@ public class LibraryController {
     }
     
     @PostMapping("/borrow")
-    public String borrow(@RequestParam("id") Integer id, @RequestParam("return_due_date") String returnDueDate, @AuthenticationPrincipal User User) {
-    	libraryService.borrowBook(id, returnDueDate, User);
+    public String borrow(@RequestParam("id") Integer id, @RequestParam("return_due_date") String returnDueDate, @AuthenticationPrincipal LoginUser loginUser) {
+    	libraryService.borrowBook(id, returnDueDate, loginUser);
     	return "redirect:/library";
     }
     
