@@ -11,8 +11,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "LOGS")
-public class Logs {
+@Table(name = "LOG")
+public class Log {
 	
 	@Id
 	@SequenceGenerator(name = "LOGS_ID_GENERATOR", sequenceName = "LOGS_ID_SEQ", allocationSize = 1)

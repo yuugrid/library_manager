@@ -5,20 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.entity.Logs;
-import com.example.repository.LogsRepository;
+import com.example.entity.Log;
+import com.example.repository.LogRepository;
 
 @Service
-public class LogsService {
+public class LogService {
 
-    private final LogsRepository logsRepository;
+    private final LogRepository logsRepository;
 
     @Autowired
-    public LogsService(LogsRepository logsRepository) {
+    public LogService(LogRepository logsRepository) {
         this.logsRepository = logsRepository;
     }
 
-    public List<Logs> findAll() {
+    public List<Log> findAll() {
         return this.logsRepository.findAll();
     }
 
