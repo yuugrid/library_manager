@@ -42,8 +42,7 @@ public class LibraryService {
     	libraryRepository.save(library);
     	
     	Log log = new Log();
-    	log.setId(id);
-    	log.setLibraryId(library.getId());
+    	log.setLibraryId(id);
     	log.setUserId(loginUser.getUser().getId());
     	log.setRentDate(LocalDateTime.now());
     	log.setReturnDueDate(LocalDateTime.parse(returnDueDate + "T00:00:00"));
