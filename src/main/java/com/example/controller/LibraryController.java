@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Library;
 import com.example.service.LibraryService;
-import com.example.service.LogService;
 import com.example.service.LoginUser;
 
 @Controller
@@ -22,13 +21,10 @@ public class LibraryController {
 
     private final LibraryService libraryService;
     
-    private final LogService logService;
-    
 
     @Autowired
-    public LibraryController(LibraryService libraryService, LogService logService) {
+    public LibraryController(LibraryService libraryService) {
         this.libraryService = libraryService;
-        this.logService = logService;
     }
     
     @GetMapping
@@ -50,6 +46,12 @@ public class LibraryController {
     @PostMapping("/borrow")
     public String borrow(@RequestParam("id") Integer id, @RequestParam("return_due_date") String returnDueDate, @AuthenticationPrincipal LoginUser loginUser) {
     	libraryService.borrowBook(id, returnDueDate, loginUser);
+    	return "redirect:/library";
+    }
+    
+    @PostMapping("/return")
+    public String returnBook(@RequestParam("id") Integer id, @AuthenticationPrincipal LoginUser loginUser) {
+    	libraryService.update(id, loginUser);
     	return "redirect:/library";
     }
     

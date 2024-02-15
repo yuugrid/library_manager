@@ -8,5 +8,5 @@ import com.example.entity.Log;
 
 @Repository
 public interface LogRepository extends JpaRepository<Log, Integer> {
-
+	Log findTopByLibraryIdAndUserIdOrderByRentDateDesc(Integer libraryId, Integer userId);
 }

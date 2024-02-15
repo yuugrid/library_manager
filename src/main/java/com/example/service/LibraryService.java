@@ -51,5 +51,14 @@ public class LibraryService {
     	
     }
     
+    public void update(Integer id, LoginUser loginUser) {
+    	Library library = findById(id);
+    	library.setUserId(0);
+    	libraryRepository.save(library);
+    	
+    	Log log = logRepository.findTopByLibraryIdAndUserIdOrderByRentDateDesc(id, loginUser.getUser().getId());
+        log.setReturnDate(LocalDateTime.now());
+        logRepository.save(log);
+    }
 
 }
