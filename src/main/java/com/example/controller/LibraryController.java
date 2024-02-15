@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Library;
-import com.example.entity.Log;
 import com.example.service.LibraryService;
 import com.example.service.LogService;
 import com.example.service.LoginUser;
@@ -33,11 +32,11 @@ public class LibraryController {
     }
     
     @GetMapping
-    public String index(Model model) {
+    public String index(Model model, @AuthenticationPrincipal LoginUser loginUser) {
         List<Library> libraries = this.libraryService.findAll();
         model.addAttribute("libraries", libraries);
-        List<Log> logs = this.logService.findAll();
-        model.addAttribute("logs", logs);
+        Integer userId = loginUser.getUser().getId();
+        model.addAttribute("userId", userId);
         return "library/index";
     }
     
