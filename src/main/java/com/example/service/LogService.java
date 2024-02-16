@@ -11,15 +11,16 @@ import com.example.repository.LogRepository;
 @Service
 public class LogService {
 
-    private final LogRepository logsRepository;
+    private final LogRepository logRepository;
 
     @Autowired
-    public LogService(LogRepository logsRepository) {
-        this.logsRepository = logsRepository;
+    public LogService(LogRepository logRepository) {
+        this.logRepository = logRepository;
     }
 
-    public List<Log> findAll() {
-        return this.logsRepository.findAll();
+    public List<Log> findByUserId(Integer userId) {
+        return this.logRepository.findByUserId(userId);
     }
+ 
 
 }

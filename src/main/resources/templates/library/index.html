@@ -36,12 +36,12 @@
 						                <td>
 											<td th:switch="${library.userId}">
 												<form th:case="0" th:action="@{/library/borrow}" th:method="get">
-														<input type="hidden" name="Id" th:value="${library.id}">
+														<input type="hidden" name="id" th:value="${library.id}">
 														<input type="submit" value="borrow" class="btn btn-info">
 												</form>
 												<form th:case="${#authentication.principal.user.id}" th:action="@{/library/return}" th:method="post">
 						                            <input type="submit" value="return" class="btn btn-danger">
-						                            <input type="hidden" name="Id" th:value="${library.id}">
+						                            <input type="hidden" name="id" th:value="${library.id}">
 						                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
 						                        </form>
 												<div th:case="*" class="btn btn-success">borrowing</div>

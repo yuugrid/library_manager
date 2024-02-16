@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Library;
+import com.example.entity.Log;
 import com.example.service.LibraryService;
+import com.example.service.LogService;
 import com.example.service.LoginUser;
+
 
 @Controller
 @RequestMapping("library")
@@ -21,10 +24,13 @@ public class LibraryController {
 
     private final LibraryService libraryService;
     
+    private final LogService logService;
+    
 
     @Autowired
-    public LibraryController(LibraryService libraryService) {
+    public LibraryController(LibraryService libraryService, LogService logService) {
         this.libraryService = libraryService;
+        this.logService = logService;
     }
     
     @GetMapping
@@ -49,10 +55,20 @@ public class LibraryController {
     	return "redirect:/library";
     }
     
+    
     @PostMapping("/return")
     public String returnBook(@RequestParam("id") Integer id, @AuthenticationPrincipal LoginUser loginUser) {
     	libraryService.update(id, loginUser);
     	return "redirect:/library";
+    }
+    
+    @GetMapping("/history")
+    public String history(Model model, @AuthenticationPrincipal LoginUser loginUser) {
+    	Integer userId = loginUser.getUser().getId();
+    	model.addAttribute("userId", userId);
+    	List<Log> logs = this.logService.findByUserId(userId);
+    	model.addAttribute("logs", logs);
+    	return "library/borrowHistory";
     }
     
 }
