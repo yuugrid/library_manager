@@ -31,7 +31,7 @@
 						            </tr>
 						        </thead>
 						        <tbody>
-						            <tr th:each="Log : ${logs}">
+						            <tr th:each="log : ${logs}">
 						                <td th:text="${log.library.name}"></td>
 						                <td th:text="${#temporals.format(log.rentDate, 'yyyy年MM月dd日')}"></td>
 						                <td th:text="${log.returnDate != null ? #temporals.format(log.returnDate, 'yyyy年MM月dd日') : '-'}"></td>
