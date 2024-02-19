@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Library;
-import com.example.entity.User;
+import com.example.entity.Log;
 import com.example.service.LibraryService;
+import com.example.service.LogService;
+import com.example.service.LoginUser;
+
 
 @Controller
 @RequestMapping("library")
@@ -21,16 +24,21 @@ public class LibraryController {
 
     private final LibraryService libraryService;
     
+    private final LogService logService;
+    
 
     @Autowired
-    public LibraryController(LibraryService libraryService) {
+    public LibraryController(LibraryService libraryService, LogService logService) {
         this.libraryService = libraryService;
+        this.logService = logService;
     }
     
     @GetMapping
-    public String index(Model model) {
+    public String index(Model model, @AuthenticationPrincipal LoginUser loginUser) {
         List<Library> libraries = this.libraryService.findAll();
         model.addAttribute("libraries", libraries);
+        Integer userId = loginUser.getUser().getId();
+        model.addAttribute("userId", userId);
         return "library/index";
     }
     
@@ -42,9 +50,25 @@ public class LibraryController {
     }
     
     @PostMapping("/borrow")
-    public String borrow(@RequestParam("id") Integer id, @RequestParam("return_due_date") String returnDueDate, @AuthenticationPrincipal User User) {
-    	libraryService.borrowBook(id, returnDueDate, User);
+    public String borrow(@RequestParam("id") Integer id, @RequestParam("return_due_date") String returnDueDate, @AuthenticationPrincipal LoginUser loginUser) {
+    	libraryService.borrowBook(id, returnDueDate, loginUser);
     	return "redirect:/library";
+    }
+    
+    
+    @PostMapping("/return")
+    public String returnBook(@RequestParam("id") Integer id, @AuthenticationPrincipal LoginUser loginUser) {
+    	libraryService.update(id, loginUser);
+    	return "redirect:/library";
+    }
+    
+    @GetMapping("/history")
+    public String history(Model model, @AuthenticationPrincipal LoginUser loginUser) {
+    	Integer userId = loginUser.getUser().getId();
+    	model.addAttribute("userId", userId);
+    	List<Log> logs = this.logService.findByUserId(userId);
+    	model.addAttribute("logs", logs);
+    	return "library/borrowHistory";
     }
     
 }

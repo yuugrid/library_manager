@@ -7,12 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "LOGS")
-public class Logs {
+public class Log {
 	
 	@Id
 	@SequenceGenerator(name = "LOGS_ID_GENERATOR", sequenceName = "LOGS_ID_SEQ", allocationSize = 1)
@@ -81,6 +83,14 @@ public class Logs {
 	
 	public void setReturnDueDate(LocalDateTime returnDueDate) {
 		this.returnDueDate = returnDueDate;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "library_id", insertable = false, updatable = false)
+	private Library library;
+	
+	public Library getLibrary() {
+		return this.library;
 	}
 
 }
